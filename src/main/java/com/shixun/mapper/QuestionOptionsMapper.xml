@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shixun.mapper.QuestionOptionsMapper">
+  <resultMap id="BaseResultMap" type="com.shixun.entity.QuestionOptions">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="question_code" jdbcType="VARCHAR" property="questionCode" />
+    <result column="options_text" jdbcType="VARCHAR" property="optionsText" />
+    <result column="options_code" jdbcType="VARCHAR" property="optionsCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, question_code, options_text, options_code
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from question_options
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from question_options
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.shixun.entity.QuestionOptions">
+    insert into question_options (id, question_code, options_text, 
+      options_code)
+    values (#{id,jdbcType=INTEGER}, #{questionCode,jdbcType=VARCHAR}, #{optionsText,jdbcType=VARCHAR}, 
+      #{optionsCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shixun.entity.QuestionOptions">
+    insert into question_options
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="questionCode != null">
+        question_code,
+      </if>
+      <if test="optionsText != null">
+        options_text,
+      </if>
+      <if test="optionsCode != null">
+        options_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="questionCode != null">
+        #{questionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="optionsText != null">
+        #{optionsText,jdbcType=VARCHAR},
+      </if>
+      <if test="optionsCode != null">
+        #{optionsCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shixun.entity.QuestionOptions">
+    update question_options
+    <set>
+      <if test="questionCode != null">
+        question_code = #{questionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="optionsText != null">
+        options_text = #{optionsText,jdbcType=VARCHAR},
+      </if>
+      <if test="optionsCode != null">
+        options_code = #{optionsCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shixun.entity.QuestionOptions">
+    update question_options
+    set question_code = #{questionCode,jdbcType=VARCHAR},
+      options_text = #{optionsText,jdbcType=VARCHAR},
+      options_code = #{optionsCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

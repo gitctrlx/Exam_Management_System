@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shixun.mapper.MenuMapper">
+  <resultMap id="BaseResultMap" type="com.shixun.entity.Menu">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="menu_code" jdbcType="VARCHAR" property="menuCode" />
+    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
+    <result column="menu_url" jdbcType="VARCHAR" property="menuUrl" />
+    <result column="menu_level" jdbcType="VARCHAR" property="menuLevel" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="parent_menu_name" jdbcType="VARCHAR" property="parentMenuName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, menu_code, menu_name, menu_url, menu_level, parent_id, sort
+  </sql>
+
+    <select id="all" resultMap="BaseResultMap">
+        SELECT * FROM menu
+    </select>
+
+    <!--
+       一般来说，mybatis的xml中，获取参数对象的属性值的时候，一般#{属性名}
+       但是分页查询比较特殊，偏移量和步长这2个参数需要使用${属性名}获取参数对象的属性值
+
+
+       我们这里的SQL查询menu的所有字段和parent_menu_name
+       返回值指定的是BaseResultMap，BaseResultMap中只有menu的所有字段与Menu类的所有属性直接的映射关系
+       需要在Menu类中新增一个parentMenuName属性(包括它的getter和setter方法)，
+       然后在BaseResultMap中新增一个parent_menu_name与parentMenuName属性映射关系
+    -->
+    <select id="list" parameterType="com.shixun.common.JsGridData" resultMap="BaseResultMap">
+        SELECT m.*,pm.menu_name parent_menu_name FROM menu m
+        LEFT JOIN menu pm ON m.parent_id = pm.id
+        WHERE m.menu_name LIKE '%${search}%'
+        LIMIT ${offset},${pageSize}
+    </select>
+
+    <!--
+    我们这里是查询一个count值，返回值使用一个基本数据类型的包装类，使用resultType
+    -->
+    <select id="count" parameterType="com.shixun.common.JsGridData" resultType="java.lang.Long">
+        SELECT count(id) FROM menu WHERE menu_name LIKE '%${search}%'
+    </select>
+
+    <select id="firstMenus" resultMap="BaseResultMap">
+        SELECT * FROM menu WHERE menu_level = '1' ORDER BY sort
+    </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.shixun.entity.Menu">
+    insert into menu (id, menu_code, menu_name, 
+      menu_url, menu_level, parent_id, 
+      sort)
+    values (#{id,jdbcType=INTEGER}, #{menuCode,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR}, 
+      #{menuUrl,jdbcType=VARCHAR}, #{menuLevel,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
+      #{sort,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shixun.entity.Menu">
+    insert into menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="menuCode != null">
+        menu_code,
+      </if>
+      <if test="menuName != null">
+        menu_name,
+      </if>
+      <if test="menuUrl != null">
+        menu_url,
+      </if>
+      <if test="menuLevel != null">
+        menu_level,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="menuCode != null">
+        #{menuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="menuName != null">
+        #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuUrl != null">
+        #{menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="menuLevel != null">
+        #{menuLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shixun.entity.Menu">
+    update menu
+    <set>
+      <if test="menuCode != null">
+        menu_code = #{menuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="menuName != null">
+        menu_name = #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuUrl != null">
+        menu_url = #{menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="menuLevel != null">
+        menu_level = #{menuLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shixun.entity.Menu">
+    update menu
+    set menu_code = #{menuCode,jdbcType=VARCHAR},
+      menu_name = #{menuName,jdbcType=VARCHAR},
+      menu_url = #{menuUrl,jdbcType=VARCHAR},
+      menu_level = #{menuLevel,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

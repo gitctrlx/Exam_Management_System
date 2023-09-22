@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shixun.mapper.ExaminationQuestionMapper">
+  <resultMap id="BaseResultMap" type="com.shixun.entity.ExaminationQuestion">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="subject_id" jdbcType="INTEGER" property="subjectId" />
+    <result column="question_name" jdbcType="VARCHAR" property="questionName" />
+    <result column="answer" jdbcType="VARCHAR" property="answer" />
+    <result column="correct" jdbcType="INTEGER" property="correct" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, subject_id, question_name, answer, correct
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from examination_question
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from examination_question
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.shixun.entity.ExaminationQuestion">
+    insert into examination_question (id, user_id, subject_id, 
+      question_name, answer, correct
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{subjectId,jdbcType=INTEGER}, 
+      #{questionName,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, #{correct,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shixun.entity.ExaminationQuestion">
+    insert into examination_question
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="subjectId != null">
+        subject_id,
+      </if>
+      <if test="questionName != null">
+        question_name,
+      </if>
+      <if test="answer != null">
+        answer,
+      </if>
+      <if test="correct != null">
+        correct,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="subjectId != null">
+        #{subjectId,jdbcType=INTEGER},
+      </if>
+      <if test="questionName != null">
+        #{questionName,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="correct != null">
+        #{correct,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shixun.entity.ExaminationQuestion">
+    update examination_question
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="subjectId != null">
+        subject_id = #{subjectId,jdbcType=INTEGER},
+      </if>
+      <if test="questionName != null">
+        question_name = #{questionName,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="correct != null">
+        correct = #{correct,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shixun.entity.ExaminationQuestion">
+    update examination_question
+    set user_id = #{userId,jdbcType=INTEGER},
+      subject_id = #{subjectId,jdbcType=INTEGER},
+      question_name = #{questionName,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR},
+      correct = #{correct,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

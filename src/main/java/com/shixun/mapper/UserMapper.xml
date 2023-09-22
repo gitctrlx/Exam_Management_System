@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shixun.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.shixun.entity.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="sno" jdbcType="VARCHAR" property="sno" />
+    <result column="admission_date" jdbcType="TIMESTAMP" property="admissionDate" />
+    <result column="faculty_id" jdbcType="INTEGER" property="facultyId" />
+    <result column="major_id" jdbcType="INTEGER" property="majorId" />
+    <result column="class_id" jdbcType="INTEGER" property="classId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, username, password, real_name, sex, sno, admission_date, faculty_id, major_id, 
+    class_id
+  </sql>
+
+    <select id="list" parameterType="com.shixun.common.JsGridData" resultMap="BaseResultMap">
+        SELECT * FROM user
+        WHERE username LIKE '%${search}%'
+        LIMIT ${offset},${pageSize}
+    </select>
+    <select id="count" parameterType="com.shixun.common.JsGridData" resultType="java.lang.Long">
+        SELECT count(id) FROM user WHERE username LIKE '%${search}%'
+    </select>
+
+    <!--
+    标签的id，与mapper接口的方法名一对一的对应，这样，在调用mapper接口的某个方法时才能执行对应的SQL
+    parameterType，请求参数类型，与方法传递的请求参数一致
+    resultMap，返回值映射关系，执行SQL语句查询的字段的值，方法返回的实体类对象，哪个字段的值填充到哪个实体类对象的属性中靠resultMap
+    -->
+    <select id="login" parameterType="com.shixun.entity.User" resultMap="BaseResultMap">
+        <!--
+         查询条件
+         username字段 = User对象参数的username属性的值
+         password字段 = User对象参数的password属性的值
+         -->
+        SELECT * FROM user WHERE username = #{username} AND password = #{password}
+    </select>
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.shixun.entity.User">
+    insert into user (id, username, password, 
+      real_name, sex, sno, 
+      admission_date, faculty_id, major_id, 
+      class_id)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{realName,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{sno,jdbcType=VARCHAR}, 
+      #{admissionDate,jdbcType=TIMESTAMP}, #{facultyId,jdbcType=INTEGER}, #{majorId,jdbcType=INTEGER}, 
+      #{classId,jdbcType=INTEGER})
+  </insert>
+
+    <!--
+    注意几点：
+    1、入学时间字段admission_date，在SQL这给一个数据库当前时间即可
+        （1）admission_date的包裹的if去掉
+        （2）<if test="admissionDate != null">
+                #{admissionDate,jdbcType=TIMESTAMP},
+              </if>
+            这段代码去掉，改成
+            CURRENT_DATE(),
+
+     2、在insert标签上加useGeneratedKeys="true" keyProperty="id"属性
+        新增user成功之后，把新增数据的主键id赋值请求参数user对象的id属性上
+    -->
+  <insert id="insertSelective" parameterType="com.shixun.entity.User" useGeneratedKeys="true" keyProperty="id">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="realName != null">
+        real_name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="sno != null">
+        sno,
+      </if>
+
+        admission_date,
+
+      <if test="facultyId != null">
+        faculty_id,
+      </if>
+      <if test="majorId != null">
+        major_id,
+      </if>
+      <if test="classId != null">
+        class_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="sno != null">
+        #{sno,jdbcType=VARCHAR},
+      </if>
+        CURRENT_DATE(),
+      <if test="facultyId != null">
+        #{facultyId,jdbcType=INTEGER},
+      </if>
+      <if test="majorId != null">
+        #{majorId,jdbcType=INTEGER},
+      </if>
+      <if test="classId != null">
+        #{classId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shixun.entity.User">
+    update user
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="sno != null">
+        sno = #{sno,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionDate != null">
+        admission_date = #{admissionDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="facultyId != null">
+        faculty_id = #{facultyId,jdbcType=INTEGER},
+      </if>
+      <if test="majorId != null">
+        major_id = #{majorId,jdbcType=INTEGER},
+      </if>
+      <if test="classId != null">
+        class_id = #{classId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shixun.entity.User">
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      sno = #{sno,jdbcType=VARCHAR},
+      admission_date = #{admissionDate,jdbcType=TIMESTAMP},
+      faculty_id = #{facultyId,jdbcType=INTEGER},
+      major_id = #{majorId,jdbcType=INTEGER},
+      class_id = #{classId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

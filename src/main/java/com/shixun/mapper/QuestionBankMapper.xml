@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shixun.mapper.QuestionBankMapper">
+  <resultMap id="BaseResultMap" type="com.shixun.entity.QuestionBank">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="subject_id" jdbcType="INTEGER" property="subjectId" />
+    <result column="question_code" jdbcType="VARCHAR" property="questionCode" />
+    <result column="question_name" jdbcType="VARCHAR" property="questionName" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="difficulty" jdbcType="INTEGER" property="difficulty" />
+    <result column="answer" jdbcType="VARCHAR" property="answer" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, subject_id, question_code, question_name, type, difficulty, answer, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from question_bank
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from question_bank
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.shixun.entity.QuestionBank">
+    insert into question_bank (id, subject_id, question_code, 
+      question_name, type, difficulty, 
+      answer, create_time)
+    values (#{id,jdbcType=INTEGER}, #{subjectId,jdbcType=INTEGER}, #{questionCode,jdbcType=VARCHAR}, 
+      #{questionName,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{difficulty,jdbcType=INTEGER}, 
+      #{answer,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shixun.entity.QuestionBank">
+    insert into question_bank
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="subjectId != null">
+        subject_id,
+      </if>
+      <if test="questionCode != null">
+        question_code,
+      </if>
+      <if test="questionName != null">
+        question_name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="difficulty != null">
+        difficulty,
+      </if>
+      <if test="answer != null">
+        answer,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="subjectId != null">
+        #{subjectId,jdbcType=INTEGER},
+      </if>
+      <if test="questionCode != null">
+        #{questionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionName != null">
+        #{questionName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="difficulty != null">
+        #{difficulty,jdbcType=INTEGER},
+      </if>
+      <if test="answer != null">
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shixun.entity.QuestionBank">
+    update question_bank
+    <set>
+      <if test="subjectId != null">
+        subject_id = #{subjectId,jdbcType=INTEGER},
+      </if>
+      <if test="questionCode != null">
+        question_code = #{questionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionName != null">
+        question_name = #{questionName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="difficulty != null">
+        difficulty = #{difficulty,jdbcType=INTEGER},
+      </if>
+      <if test="answer != null">
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shixun.entity.QuestionBank">
+    update question_bank
+    set subject_id = #{subjectId,jdbcType=INTEGER},
+      question_code = #{questionCode,jdbcType=VARCHAR},
+      question_name = #{questionName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      difficulty = #{difficulty,jdbcType=INTEGER},
+      answer = #{answer,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

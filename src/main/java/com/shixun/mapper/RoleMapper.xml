@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shixun.mapper.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.shixun.entity.Role">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="role_code" jdbcType="VARCHAR" property="roleCode" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, role_code, role_name
+  </sql>
+
+    <select id="all" resultMap="BaseResultMap">
+        SELECT * FROM role
+    </select>
+
+    <select id="list" parameterType="com.shixun.common.JsGridData" resultMap="BaseResultMap">
+        SELECT * FROM role
+        WHERE role_name LIKE '%${search}%'
+        LIMIT ${offset},${pageSize}
+    </select>
+
+    <select id="count" parameterType="com.shixun.common.JsGridData" resultType="java.lang.Long">
+        SELECT count(id) FROM role WHERE role_name LIKE '%${search}%'
+    </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from role
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.shixun.entity.Role">
+    insert into role (id, role_code, role_name
+      )
+    values (#{id,jdbcType=INTEGER}, #{roleCode,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}
+      )
+  </insert>
+
+    <!--
+        useGeneratedKeys="true" keyProperty="id"
+        在新增的时候，加入这2个属性
+        新增成功，得到新增数据的id，放到你的请求参数对象的id属性中
+        例如，我们现在这里新增一个角色，传递的参数是role对象，角色的id是自增的，设置了useGeneratedKeys="true" keyProperty="id"
+            当新增角色成功，把自增的主键id的值放到请求参数role对象的id属性中
+    -->
+  <insert id="insertSelective" parameterType="com.shixun.entity.Role" useGeneratedKeys="true" keyProperty="id">
+    insert into role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="roleCode != null">
+        role_code,
+      </if>
+      <if test="roleName != null">
+        role_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="roleCode != null">
+        #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shixun.entity.Role">
+    update role
+    <set>
+      <if test="roleCode != null">
+        role_code = #{roleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null">
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shixun.entity.Role">
+    update role
+    set role_code = #{roleCode,jdbcType=VARCHAR},
+      role_name = #{roleName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shixun.mapper.MajorSemesterSubjectMapper">
+  <resultMap id="BaseResultMap" type="com.shixun.entity.MajorSemesterSubject">
+    <result column="major_semester_id" jdbcType="INTEGER" property="majorSemesterId" />
+    <result column="subject_id" jdbcType="INTEGER" property="subjectId" />
+  </resultMap>
+  <insert id="insert" parameterType="com.shixun.entity.MajorSemesterSubject">
+    insert into major_semester_subject (major_semester_id, subject_id)
+    values (#{majorSemesterId,jdbcType=INTEGER}, #{subjectId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shixun.entity.MajorSemesterSubject">
+    insert into major_semester_subject
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="majorSemesterId != null">
+        major_semester_id,
+      </if>
+      <if test="subjectId != null">
+        subject_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="majorSemesterId != null">
+        #{majorSemesterId,jdbcType=INTEGER},
+      </if>
+      <if test="subjectId != null">
+        #{subjectId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>
