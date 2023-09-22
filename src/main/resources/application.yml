@@ -1,0 +1,19 @@
+spring:
+  mvc:
+    view:
+      # 如果属性后面有值，类似prefix: /pages/，:后面需要有一个空格
+      prefix: /pages/
+      suffix: .html
+  datasource:
+    # mysql5.x，以下被注释的url和driver-class-name
+   # url: jdbc:mysql://master:3306/emis?useUnicode=true&characterEncoding=UTF-8
+    #driver-class-name: com.mysql.jdbc.Driver
+
+    # mysql8，用以下的url和driver-class-name
+    url: jdbc:mysql://localhost:3306/db1?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 这里的用户名密码，不要使用之前逆向工程的那个用户名和密码（之前的用户只能查询），去使用正常的用户
+    username: root
+    password: "1234"
+    # 数据库连接池
+    type: com.alibaba.druid.pool.DruidDataSource

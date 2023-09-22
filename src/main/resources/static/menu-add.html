@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Project Add</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<!-- Site wrapper -->
+
+  <!-- Navbar -->
+
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+
+
+  <!-- Content Wrapper. Contains page content -->
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" id="my-title">新增菜单</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title"></h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+              <!--
+              type="hidden"时候，是隐藏域，在代码中存在，但是不会在浏览器展示
+              -->
+              <input type="hidden" id="objId">
+            <div class="card-body">
+              <div class="form-group">
+                <label for="menuCode">菜单编码</label>
+                <input type="text" id="menuCode" class="form-control">
+              </div>
+                <div class="form-group">
+                    <label for="menuName">菜单名称</label>
+                    <input type="text" id="menuName" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="menuUrl">菜单url</label>
+                    <input type="text" id="menuUrl" class="form-control">
+                </div>
+                <!-- 菜单级别，分为一级菜单和二级菜单，做一个下拉列表好看 -->
+              <div class="form-group">
+                <label for="menuLevel">菜单级别</label>
+                <select id="menuLevel" class="form-control custom-select" onchange="createParentMenus()">
+                  <option value="">--请选择--</option>
+                  <option value="1">一级菜单</option>
+                  <option value="2">二级菜单</option>
+                </select>
+              </div>
+                <!--
+                我们在新增菜单的时候，需要设置当前新增菜单是属于哪个父菜单
+                准备设置为下拉列表，根据你上边选择的菜单级别给下拉列表加载不同的选项
+                如果新增的是一级菜单，默认都是父id为0一个根节点
+                如果新增的是二级菜单，应该提供一个所有一级菜单的下拉列表，供选择
+                父菜单的下拉列表初始的时候，没有选项，根据当前选择的菜单级别，去动态加载选项到父菜单的下拉列表
+                -->
+                <div class="form-group">
+                    <label for="parentId">父菜单</label>
+                    <select id="parentId" class="form-control custom-select">
+
+                    </select>
+                </div>
+
+              <div class="form-group">
+                <label for="sort">排序</label>
+                <input type="text" id="sort" class="form-control">
+              </div>
+
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <div class="col-md-2"></div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <a href="#" class="btn btn-secondary">清空</a>
+          <input type="button" value="提交" class="btn btn-success float-right" onclick="subForm()">
+        </div>
+
+        <div class="col-md-2"></div>
+      </div>
+    </section>
+    <!-- /.content -->
+
+  <!-- /.content-wrapper -->
+
+
+
+  <!-- Control Sidebar -->
+  <!-- /.control-sidebar -->
+
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+<script src="js/menu-add.js"></script>
+</body>
+</html>

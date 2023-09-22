@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--
+    使用相对路径，引用静态资源
+    ../，代表当前文件所在文件夹的上级文件夹
+
+    使用多个script标签可以引用多个js文件，根据script标签写的上下顺序去加载js
+    如果你的js之间存在依赖关系
+    例如，b.js中要使用a.js中的内容，在引用的时候，a.js必须在b.js之前引用
+    -->
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/js-demo.js"></script>
+</head>
+<body>
+<input type="button" value="测试按钮" onclick="func6()">
+<br><hr>
+<!-- 任何的html标签都有id属性，id值在当前的页面唯一 -->
+<input type="text" id="t-0">
+
+<br><hr>
+
+<!-- onchange,下拉列表，改变选中的选项的时候触发 -->
+<select id="s-0" onchange="func7()">
+    <option value="0">选项1</option>
+    <option value="1">选项2</option>
+    <option value="2">选项3</option>
+</select>
+
+<br><hr>
+
+<div aaa="yy" id="d-0">hello world</div>
+<br><hr>
+
+<div id="d-1">你好<b>张三</b></div>
+
+<br><hr>
+<div aaa="yy" class="c-0">abc</div>
+<div class="c-1">sss</div>
+<div class="c-0">www</div>
+
+<br><hr>
+<input type="checkbox" name="c-0">篮球
+<input type="checkbox" name="c-0">足球
+<input type="checkbox" name="c-0">台球
+
+<br><hr>
+文本框：<input type="text" value="123">
+密码框：<input type="password" >
+
+<br><hr>
+
+<div id="d-2">
+    <div>
+        <div></div>
+    </div>
+    <div>
+        <div></div>
+    </div>
+    <span></span>
+</div>
+
+<br><hr>
+
+<div id="d-3">
+    <div>
+        第1个div
+    </div>
+    <div>
+        第2个div
+    </div>
+    <span id="span-0"></span>
+</div>
+
+<br><hr>
+<div id="d-4" class="qqq" abc="12345">111</div>
+
+</body>
+</html>

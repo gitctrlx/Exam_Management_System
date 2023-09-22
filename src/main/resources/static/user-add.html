@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Project Add</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<!-- Site wrapper -->
+
+  <!-- Navbar -->
+
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+
+
+  <!-- Content Wrapper. Contains page content -->
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" id="my-title">新增用户</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title"></h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+              <!--
+              type="hidden"时候，是隐藏域，在代码中存在，但是不会在浏览器展示
+              -->
+              <input type="hidden" id="objId">
+            <div class="card-body">
+              <div class="form-group">
+                <label for="username">用户名</label>
+                <input type="text" id="username" class="form-control">
+              </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="realName">姓名</label>
+                    <input type="text" id="realName" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="sex">性别</label>
+                    <select id="sex" class="form-control custom-select">
+                        <option value="">--请选择--</option>
+                        <option value="0">男</option>
+                        <option value="1">女</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sno">学号</label>
+                    <input type="text" id="sno" class="form-control">
+                </div>
+
+                <!-- 下面院系、专业、班级3个下拉列表都是同ajax动态加载 -->
+              <div class="form-group">
+                <label for="facultyId">院系</label>
+                <select id="facultyId" class="form-control custom-select" onchange="createMajor()">
+
+                </select>
+              </div>
+
+                <!-- 院系选中的选项发生改变的时候，去加载专业下拉列表 -->
+                <div class="form-group">
+                    <label for="majorId">专业</label>
+                    <select id="majorId" class="form-control custom-select" onchange="createClass()">
+
+                    </select>
+                </div>
+
+                <!-- 专业选中的选项发生改变的时候，加载班级下拉列表，根据专业id查询班级 -->
+                <div class="form-group">
+                    <label for="classId">班级</label>
+                    <select id="classId" class="form-control custom-select">
+
+                    </select>
+                </div>
+
+                <!-- 角色的下拉列表，在页面加载之后自动加载 -->
+                <div class="form-group">
+                    <label for="roleId">角色</label>
+                    <select id="roleId" class="form-control custom-select">
+
+                    </select>
+                </div>
+
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <div class="col-md-2"></div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <a href="#" class="btn btn-secondary">清空</a>
+          <input type="button" value="提交" class="btn btn-success float-right" onclick="subForm()">
+        </div>
+
+        <div class="col-md-2"></div>
+      </div>
+    </section>
+    <!-- /.content -->
+
+  <!-- /.content-wrapper -->
+
+
+
+  <!-- Control Sidebar -->
+  <!-- /.control-sidebar -->
+
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+<script src="js/user-add.js"></script>
+<script src="js/common.js"></script>
+</body>
+</html>
